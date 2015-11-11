@@ -17,8 +17,8 @@ int main() {
   std::cout << "Inserisci la frequenza della seconda onda sonora: ";
   std::cin >> f2;
 
-  const double increment1 = f1/SAMPLES;
-  const double increment2 = f2/SAMPLES;
+  const double increment1 = f1/SAMPLE_RATE;
+  const double increment2 = f2/SAMPLE_RATE;
   
   //trovo frequenza di battimento
   double f_beat = std::abs(f1-f2);
