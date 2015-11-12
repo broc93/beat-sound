@@ -1,6 +1,7 @@
 #include <SFML/Audio.hpp>
 #include <iostream>
 #include <cmath>
+#include <fstream>
 
 int main() {
   //rate di campionamento (numero di campioni per secondo)
@@ -16,6 +17,9 @@ int main() {
 
   std::cout << "Inserisci la frequenza della seconda onda sonora: ";
   std::cin >> f2;
+  
+  std::ofstream out;
+  out.open("out.dat");
 
   const double increment1 = f1/SAMPLE_RATE;
   const double increment2 = f2/SAMPLE_RATE;
@@ -33,10 +37,15 @@ int main() {
   //che contiene i valori di ampiezza dell'onda sonora ad intervalli di tempo regolari
   //dati dal rate impostato sopra
   sf::Int16 raw[SAMPLES];
+  out << "time" << " " << "wave1+wave2" << " " << "wave1" << " " << "wave2" << std::endl;
   for (unsigned i = 0; i < SAMPLES; i++) {
     raw[i] = AMPLITUDE * ( sin(x1*TWO_PI) + sin(x2*TWO_PI) );
     x1 += increment1;
     x2 += increment2;
+    //stampa su file
+    double w1 = AMPLITUDE * sin(x1*TWO_PI);
+    double w2 = AMPLITUDE * sin(x2*TWO_PI);
+    out << (float)i/SAMPLE_RATE << " " << raw[i] << " " << w1 << " " << w2 << std::endl;
   }
 
   //carico il buffer:vedasi documentazione libreria SFML
